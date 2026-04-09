@@ -5,12 +5,14 @@ public class Main {
         Database.connect();
         Database db = new Database();
 
-        db.insertParticipant("Christian", "christian@koulu.fi");
+        //db.insertParticipant("Timo", "Timo@koulu.fi");
         db.queryParticipants();
 
-        db.updateParticipant(1, "Christian Pro");
+        db.updateParticipant(8, "Christian Updated");
+        db.queryParticipants();
+        db.deleteParticipant(9);
+        System.out.println("removed Timo");
         db.queryParticipants();
 
-        //db.deleteParticipant();
     }
 }
