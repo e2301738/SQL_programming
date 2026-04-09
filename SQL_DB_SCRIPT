@@ -1,0 +1,45 @@
+CREATE DATABASE IF NOT EXISTS MeetingCalendarDB;
+USE MeetingCalendarDB;
+
+CREATE TABLE Categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    color_code VARCHAR(7)
+);
+
+CREATE TABLE Participants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE Meetings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    description TEXT,
+    meeting_date_time DATETIME NOT NULL,
+    location VARCHAR(100),
+    category_id INT,
+    CONSTRAINT fk_category FOREIGN KEY (category_id)
+        REFERENCES Categories(id) ON DELETE SET NULL
+);
+
+
+CREATE TABLE MeetingImages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image_data LONGBLOB NOT NULL,
+    file_name VARCHAR(255),
+    meeting_id INT,
+    CONSTRAINT fk_meeting_image FOREIGN KEY (meeting_id)
+        REFERENCES Meetings(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Meeting_Participants (
+    meeting_id INT,
+    participant_id INT,
+    PRIMARY KEY (meeting_id, participant_id),
+    CONSTRAINT fk_meeting FOREIGN KEY (meeting_id)
+        REFERENCES Meetings(id) ON DELETE CASCADE,
+    CONSTRAINT fk_participant FOREIGN KEY (participant_id)
+        REFERENCES Participants(id) ON DELETE CASCADE
+);
